@@ -1,4 +1,4 @@
-*SPHINCSLET: An Area-Efficient Accelerator for the Full SPHINCS+ Digital Signature Algorithm*
+**SPHINCSLET: An Area-Efficient Accelerator for the Full SPHINCS+ Digital Signature Algorithm**
 
 This repository contains the rtl code for SPHINCSLET, an area-efficient hardware implementation of the SPHINCS+ digital signature algorithm. This work has been published at ACM Transactions on Embedded Computing Systems (TECS) 2025 and is available open access at https://dl.acm.org/doi/10.1145/3728469.
 

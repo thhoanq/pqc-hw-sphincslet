@@ -1,5 +1,7 @@
 // ============================================================================
-// Project:   SPHINCSLET
+// Project:   Keccak Verilog Module
+// Author:    Ma'muri - mamuri@tii.ae
+// Created:   January 2024
 //
 // Description:
 //   Top-level module for the Keccak sponge function in Verilog.
@@ -8,6 +10,8 @@
 // as top module of keccak permutation.
 //
 // The MIT License (MIT)
+//
+// Copyright (c) 2024 Ma'muri
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +32,10 @@
 // THE SOFTWARE.
 // ============================================================================
 
+// import pkg_keccak::k_state;
+// import pkg_keccak::N;
+// import pkg_keccak::IN_BUF_SIZE;
+// import pkg_keccak::OUT_BUF_SIZE;
 
 module keccak_top 
 #(
@@ -36,14 +44,14 @@ module keccak_top
     parameter OUT_BUF_SIZE = 200
 )
 (
-    input                             Clock,       //System clock
-    input                             Reset,       //Active HIGH reset signal
-    input                             Start,       //Start signal, valid on Ready
-    input   [200*8-1:0]               Din,         //Data input byte stream, 200 bytes length. Valid during Start AND Ready
-    input                             Req_more,    //Request more data output, valid on Ready
+    input wire                        Clock,       //System clock
+    input wire                        Reset,       //Active HIGH reset signal
+    input wire                        Start,       //Start signal, valid on Ready
+    input wire  [200*8-1:0]           Din,         //Data input byte stream, 200 bytes length. Valid during Start AND Ready
+    input wire                        Req_more,    //Request more data output, valid on Ready
 
     output  reg                       Ready,       //keccak's ready signal
-    output  [200*8-1:0]               Dout
+    output  wire [200*8-1:0]          Dout
                 );       //Data output byte stream, 200 bytes length
 
 
@@ -61,8 +69,6 @@ genvar i;
 generate
     for (i=0; i < 25; i=i+1)
     begin: swap_input
-
-      
       assign swap_data_in[64*(i+1) -1:64*i] =   {   
                                                     Din[64*(i)+08-1:64*(i)+00], Din[64*(i)+16-1:64*(i)+08],
                                                     Din[64*(i)+24-1:64*(i)+16], Din[64*(i)+32-1:64*(i)+24],
@@ -73,7 +79,6 @@ generate
 endgenerate
 
 assign state_in  = reg_data;
-// assign Round_in  = bit_to_state(state_in);
 assign Round_in  = state_in;
 
 keccak_round 
@@ -93,15 +98,10 @@ keccak_round_constants_gen_i
 
 assign state_out = Round_out;
 
-
-
-
 genvar j;
 generate
     for (j=0; j < 25; j=j+1)
     begin: swap_output
-
-      
       assign swap_data_out[64*(j+1)-1:64*j] =   {   
                                                     reg_data[64*(j)+08-1:64*(j)+00], reg_data[64*(j)+16-1:64*(j)+08],
                                                     reg_data[64*(j)+24-1:64*(j)+16], reg_data[64*(j)+32-1:64*(j)+24],

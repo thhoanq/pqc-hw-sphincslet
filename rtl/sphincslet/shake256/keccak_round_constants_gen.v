@@ -1,10 +1,17 @@
 // ============================================================================
-// Project:   SPHINCSLET
-// Description:   Keccak Round Constants Module
+// Project:   Keccak Verilog Module
+// Author:    Josh Moles
+// Created:   27 May 2013
 //
+// Description:
+//   Top-level module for the Keccak sponge function in Verilog.
+//
+// This code is almost a straight translation of the VHDL high-speed module
+// provided from http://keccak.noekeon.org/.
 //
 // The MIT License (MIT)
 //
+// Copyright (c) 2013 Josh Moles
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +33,7 @@
 // ============================================================================
 
 module keccak_round_constants_gen(
-        input   [4:0]          round_number,
+        input wire  [4:0]   round_number,
         output  reg [63:0]  round_constant_signal_out);
 
     always@(round_number)

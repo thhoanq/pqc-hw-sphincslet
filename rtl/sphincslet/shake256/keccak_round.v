@@ -1,6 +1,9 @@
 // ============================================================================
-// Project:   SPHINCSLET
-// Description:   Keccak Round Module
+// Project:   Keccak Verilog Module
+// Author:    Josh Moles
+// Created:   27 May 2013
+//
+// Description:
 //
 //
 // This code is almost a straight translation of the VHDL high-speed module
@@ -8,6 +11,7 @@
 //
 // The MIT License (MIT)
 //
+// Copyright (c) 2013 Josh Moles
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,17 +32,24 @@
 // THE SOFTWARE.
 // ============================================================================
 
+// import pkg_keccak::k_plane;
+// import pkg_keccak::k_state;
+// import pkg_keccak::N;
+// import pkg_keccak::ABS;
 
 module keccak_round 
 #(
     parameter N = 64
 )
 (
-    input   [1599:0]        Round_in,
-    input   [N-1:0]         Round_constant_signal,
-    output  [1599:0]        Round_out
+    input wire  [1599:0]        Round_in,
+    input wire  [N-1:0]         Round_constant_signal,
+    output wire [1599:0]        Round_out
     );
 
+
+// k_state theta_in, theta_out, pi_in, pi_out, rho_in, rho_out,
+        // chi_in, chi_out, iota_in, iota_out;
 
 wire [N-1:0] theta_in [4:0][4:0];
 wire [N-1:0] theta_out[4:0][4:0];
@@ -85,7 +96,7 @@ endgenerate
 
 // Connections
 
-// Order is theta, pi, rho, chi, iota
+// Order is theata, pi, rho, chi, iota
 genvar i_i, j_j;
 generate
     for (i_i = 0; i_i < 5; i_i = i_i + 1) begin
@@ -100,10 +111,6 @@ generate
     end
 endgenerate
 
-
-
-
-// Chi
 genvar y, x, z;
 generate
     for (y = 0; y <= 4; y = y + 1) begin
@@ -115,7 +122,6 @@ generate
     end
 endgenerate
 
-
 genvar yy, ii;
 generate
     for (yy = 0; yy <= 4; yy = yy + 1) begin
@@ -124,7 +130,6 @@ generate
         end
     end
 endgenerate
-
 
 genvar yyy, iii;
 generate
@@ -136,7 +141,9 @@ generate
 endgenerate
 
 
+// Theta
 
+//compute the sum of the columns
 genvar xx, jj;
 generate
     for (xx = 0; xx <= 4; xx = xx + 1) begin 
@@ -145,7 +152,6 @@ generate
         end
     end
 endgenerate
-
 
 genvar m,n,o;
 generate
@@ -160,8 +166,6 @@ generate
     end
 endgenerate
 
-
-
 genvar mm, oo;
 generate
     for(mm = 0; mm <= 4; mm = mm + 1) begin
@@ -172,7 +176,6 @@ generate
         end
     end
 endgenerate
-
 
 genvar p, q;
 generate
@@ -185,7 +188,7 @@ generate
     end
 endgenerate
 
-
+// Pi
 genvar pp,qq,rr;
 generate
     for (pp = 0; pp <= 4; pp = pp + 1) begin
@@ -197,8 +200,6 @@ generate
     end
 endgenerate
 
-
-
 genvar f, g, h;
 generate
     for (f = 1; f <= 4; f = f + 1) begin 
@@ -209,7 +210,6 @@ generate
         end
     end
 endgenerate
-
 
 genvar ff, gg;
 generate
@@ -1821,7 +1821,6 @@ assign rho_out[4][1][ 63 ] = rho_in[4][1][ 61 ];
 assign rho_out[4][2][ 63 ] = rho_in[4][2][ 2 ];
 assign rho_out[4][3][ 63 ] = rho_in[4][3][ 7 ];
 assign rho_out[4][4][ 63 ] = rho_in[4][4][ 49 ];
-
 
 genvar hh;
 generate

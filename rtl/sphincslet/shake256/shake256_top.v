@@ -1,45 +1,25 @@
-
-// ============================================================================
-// Project:   SPHINCSLET
-// Description: Top Module for SHAKE256 with variable inputs and outputs.
-//
-//
-// The MIT License (MIT)
-//
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-// ============================================================================
+/*
+ * Top Module for SHAKE256 with variable inputs and outputs.
+ *
+ * Copyright (C) 2024
+ * Authors: Ma'muri <mamuri@tii.ae>
+ *   
+*/
 
 // `timescale 1 ns / 10 ps
 module shake256_top
 (
-  input                     clk_i,              //system clock
-  input                     rst_ni,             //system reset, active low
-  input                     start_i,            //start of SHAKE process, 1 clock pulse, assert before putting input data
-  input   [63:0]            din_i,              //data input
-  input                     din_valid_i,        //data input valid signal, transaction happens when both din_valid_i and din_ready_o HIGH
-  input                     last_din_i,         //last data input, also used as first data output squeeze
-  input   [3:0]             last_din_byte_i,    //byte length of last data input, 0 to 8 for DW=64
-  input                     dout_ready_i,       //signal to request output data, transaction happens when both dout_ready_i and dout_valid_o HIGH
-  output                    din_ready_o,        //signal showing shake module ready to receive input data, transaction happens when both din_valid_i and din_ready_o HIGH
-  output  [63:0]            dout_o,             //data output
-  output                    dout_valid_o        //data output valid signal, transaction happens when both dout_ready_i and dout_valid_o HIGH
+  input  wire                   clk_i,              //system clock
+  input  wire                   rst_ni,             //system reset, active low
+  input  wire                   start_i,            //start of SHAKE process, 1 clock pulse, assert before putting input data
+  input  wire [63:0]            din_i,              //data input
+  input  wire                   din_valid_i,        //data input valid signal, transaction happens when both din_valid_i and din_ready_o HIGH
+  input  wire                   last_din_i,         //last data input, also used as first data output squeeze
+  input  wire [3:0]             last_din_byte_i,    //byte length of last data input, 0 to 8 for DW=64
+  input  wire                   dout_ready_i,       //signal to request output data, transaction happens when both dout_ready_i and dout_valid_o HIGH
+  output wire                   din_ready_o,        //signal showing shake module ready to receive input data, transaction happens when both din_valid_i and din_ready_o HIGH
+  output wire [63:0]            dout_o,             //data output
+  output wire                   dout_valid_o        //data output valid signal, transaction happens when both dout_ready_i and dout_valid_o HIGH
 );
 
 localparam  DELIMITER = 8'h1F; //SHAKE128/256 Delimiter

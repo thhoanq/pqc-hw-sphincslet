@@ -1,7 +1,7 @@
 //-- SHAKE256 version or SHA-2 version --//
 //-- When define SHAKE, it works as SHAKE256 version --//
 //-- When undefine SHAKE, it works as SHA-2 version --//
-//`define SHAKE
+`define SHAKE
 
 //-- Select target parameter --//
 //`define PARAM_128S

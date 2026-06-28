@@ -187,7 +187,7 @@ output reg  [7-1:0]             w_mem_addr1
 `endif
 );
 
-wire                     WOTS_FSM_start;
+//wire                     WOTS_FSM_start; // redundant: already an ANSI output port (xsim/iverilog reject net redeclaration)
 wire                     XMSS_FSM_start;
 wire [IO_WIDTH-1:0]      WOTS_hash_data_out1 ;        
 wire                     WOTS_hash_out_valid1;   
@@ -199,7 +199,7 @@ wire [IO_WIDTH-1:0]      XMSS_hash_data_out2 ;
 wire                     XMSS_hash_out_valid2;
 wire [IO_WIDTH-1:0]      XMSS_s_out_0;
 wire [IO_WIDTH-1:0]      XMSS_s_out_2;
-wire                     WOTS_s_in_0_wr_en;
+//wire                     WOTS_s_in_0_wr_en; // redundant: already an ANSI output port (xsim/iverilog reject net redeclaration)
 wire                     WOTS_s_in_1_wr_en;
 wire [XMSS_WD -1:0]      XMSS_s_in_0_addr;
 wire [XMSS_WD -1:0]      XMSS_s_in_1_addr;
